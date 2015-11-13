@@ -1,0 +1,27 @@
+# Messages
+brand=Gymix
+word.next=Weiter
+word.back=Zurück
+
+sign.in=Einloggen
+sign.out=Abmelden
+sign.in.credentials=Partner Account login
+remember.me=Eingeloggt bleiben
+
+
+######
+# Footer
+contact=Kontakt
+agb=AGB
+disclaimer=Disclaimer
+impressum=Impressum
+
+######
+# Dashboard
+clazz.delete=Löschen
+clazz.edit=Bearbeiten
+clazz.add=Hinzufügen
+clazz.offered.amount=Sportkurse werden gerade von Ihnen angeboten
+
+
+

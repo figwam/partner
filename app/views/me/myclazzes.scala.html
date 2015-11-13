@@ -1,0 +1,48 @@
+@()(implicit messages: Messages)
+
+<div class="row" ng-controller="ClazzMeCtrl" >
+
+        <div class="row col-lg-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-success" type="submit" value="submitSearch" type="button">@Messages("clazz.add")</button>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="lead"><strong class="text-danger">
+                    {{clazzes.total}}&nbsp;</strong>@Messages("clazz.offered.amount")</h2>
+            </div>
+        </div><!-- /.row -->
+
+
+        <article class="search-result row" dir-paginate="(key, item) in clazzes.items | itemsPerPage: 10" total-items="totalClazzes" current-page="pagination.current">
+            <hr>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <a href="#" title="{{item.name}}" class="thumbnail"><img src="{{item.avatarurl}}" alt="Lorem ipsum" /></a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="fa fa-calendar"></i> <span>{{item.startFrom  | date: 'EEE, dd MMM'}}</span></li>
+                    <li><i class="fa fa-clock-o"></i> <span>
+                        {{item.startFrom  | date: 'HH:mm'}}-{{item.endAt | date: 'HH:mm'}}</span></li>
+                    <li ng-if="item.contingent - item.registrations > 0"><i class="fa fa-users"></i> <span>
+                        {{item.contingent - item.registrations}} von {{item.contingent}} frei</span></li>
+                    <li ng-if="item.contingent - item.registrations <= 0"><i class="fa fa-users"></i> <span><strong class="text-danger">@Messages("clazz.booked.out")</strong></span></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                <h3><a href="#" title="">{{item.name}}</a></h3>
+                <p>{{item.description}}</p>
+
+                <button class="btn btn-info" ng-click="book(item.id)">@Messages("clazz.edit")</button>
+                <button class="btn btn-danger" ng-click="bookDelete(item.idRegistration)">@Messages("clazz.delete")</button>
+
+            </div>
+        </article>
+        <dir-pagination-controls boundary-links="true" on-page-change="pageChanged(newPageNumber,trainee.id)" template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
+</div>
+
