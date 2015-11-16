@@ -65,8 +65,8 @@ app.config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authPro
           controller: 'HomeCtrl'
         },
         'content': {
-          templateUrl: '/views/test.html',
-          controller: 'ClazzDefCtrl'
+          templateUrl: '/views/signIn.html',
+          controller: 'SignInCtrl'
         },
         'footer': {
           templateUrl: '/views/footer.html'

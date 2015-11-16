@@ -6,13 +6,21 @@
  * The clazz controller.
  *
  */
-app.controller('ClazzDefCtrl', ['$rootScope', '$state', '$scope', '$http', '$templateCache', 'AlertFactory', '$filter', function($rootScope, $state, $scope, $http, $templateCache, AlertFactory, $filter) {
+app.controller('ClazzDefCtrl', ['$rootScope', '$state', '$scope', '$http', '$templateCache', 'AlertFactory', '$filter', 'GeneralFactory', function($rootScope, $state, $scope, $http, $templateCache, AlertFactory, $filter, GeneralFactory) {
 
 
-  $scope.totalClazzes = 0;
-  $scope.clazzesPerPage = 10;
-  $scope.data = {}
+  $scope.totalClazzes = 0
+  $scope.clazzesPerPage = 10
+
+  $scope.clazzdef = {
+    "duration":5,
+    "contingent":1
+  }
+  $scope.ui = {}
+
   getResultsPage(1)
+  GeneralFactory.getEnums()
+
   $scope.pagination = {
     current: 1
   };
@@ -30,17 +38,35 @@ app.controller('ClazzDefCtrl', ['$rootScope', '$state', '$scope', '$http', '$tem
       });
   }
 
-  $scope.onTimeStartSet = function (newDate, oldDate) {
-    $scope.data.dateStart = $filter('date')(newDate, "EEE, dd.MM.yyyy hh:mm");
-  }
+  $scope.create = function() {
+    var start = new Date($scope.clazzdef.startFrom)
+    $scope.clazzdef.endAt = new Date(start.getTime()+($scope.clazzdef.duration*60*1000))
+    $scope.clazzdef.activeFrom = new Date
+    $scope.clazzdef.activeTill = new Date(2222, 0, 31) //31.01.2222 year in future. In 2222 this app will have a bug, but then I don't care
+    $scope.clazzdef.tags = $scope.ui.tags.id
+    $scope.clazzdef.recurrence = $scope.ui.recurrence.id
+    $http({
+      method: "POST",
+      url: "/partners/me/clazzdefs",
+      data: $scope.clazzdef,
+      headers: { 'Content-Type': 'application/json; charset=UTF-8'},
+      cache: $templateCache}).
+    then(function(response) {
+      $scope.status = response.status
+      $scope.data = response.data
+      AlertFactory.addAlert(response.data.message, "success")
+      getResultsPage(1)
+      $scope.go("me.clazzes")
+    }, function(response) {
+      $scope.data = response.data
+      $scope.status = response.status
+      AlertFactory.addAlert(response.data.message, "danger")
+    });
+  };
 
-  $scope.onTimeEndSet = function (newDate, oldDate) {
-    if ($scope.data.dateStart < $scope.data.dateEnd) {
-      $scope.data.dateEnd = $scope.data.dateStart
-    }
-    console.log($scope.data.dateStart)
-    console.log($scope.data.dateEnd)
-    $scope.data.dateEnd = $filter('date')(newDate, "EEE, dd.MM.yyyy hh:mm");
+  $scope.onTimeStartSet = function (newDate, oldDate) {
+    $scope.clazzdef.startFrom = newDate
+    $scope.ui.startFrom = $filter('date')(newDate, "EEE, dd.MM.yyyy hh:mm");
   }
 
   $scope.beforeRenderStart = function ($view, $dates, $leftDate, $upDate, $rightDate) {
@@ -86,39 +112,6 @@ app.controller('ClazzDefCtrl', ['$rootScope', '$state', '$scope', '$http', '$tem
             date.selectable = false;
           }
           break;
-
-        case 'hour':
-          if (dateValue < hourViewDateValue) {
-            date.selectable = false;
-          }
-          break;
-
-        case 'minute':
-          if (dateValue < minuteViewDateValue) {
-            date.selectable = false;
-          }
-          break;
-      }
-    }
-  }
-
-
-  $scope.beforeRenderEnd = function ($view, $dates, $leftDate, $upDate, $rightDate, selectedDate) {
-    $scope.beforeRenderStart($view, $dates, $leftDate, $upDate, $rightDate)
-    var currentDate = new Date();
-    var hourViewDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours());
-    var hourViewDateValue = hourViewDate.getTime();
-
-    var minuteViewDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours(), currentDate.getMinutes());
-    var minuteViewDateValue = minuteViewDate.getTime();
-
-    for (var index = 0; index < $dates.length; index++) {
-
-      var date = $dates[index];
-
-      // Disable if it's in the past
-      var dateValue = date.localDateValue();
-      switch ($view) {
 
         case 'hour':
           if (dateValue < hourViewDateValue) {

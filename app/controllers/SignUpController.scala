@@ -1,7 +1,7 @@
 package controllers
 
 import java.sql.Timestamp
-import java.util.UUID
+import java.util.{GregorianCalendar, UUID}
 import javax.inject.Inject
 
 import com.mohiva.play.silhouette.api._
@@ -12,7 +12,7 @@ import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
 import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
 import forms.{SignUpForm}
 import models.daos.PartnerDAO
-import models.{Address, Partner}
+import models.{Studio, Address, Partner}
 import models.services.PartnerService
 import play.api.i18n.{ MessagesApi }
 import play.api.libs.json._
@@ -64,15 +64,20 @@ class SignUpController @Inject() (
             phone = None,
             email = Some(data.email),
             emailVerified = false,
-            createdOn = new Timestamp(System.currentTimeMillis()),
-            updatedOn = new Timestamp(System.currentTimeMillis()),
+            createdOn = new GregorianCalendar(),
+            updatedOn = new GregorianCalendar(),
             ptoken = None,
             isActive = true,
             inactiveReason = None,
             username = Some (data.email),
             fullname = Some(data.firstname + " " + data.lastname),
             avatarurl = None,
-            address = addr
+            address = addr,
+            Studio(
+              id=None,
+              name="TODO Studioname", // TODO: Create Signup controller for partner login
+              address=Address(None, data.street, data.city, data.zip, data.state, "Switzerland")
+            )
           )
           for {
             avatar <- avatarService.retrieveURL(data.email)

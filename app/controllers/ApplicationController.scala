@@ -12,11 +12,14 @@ import models.daos.{RegistrationDAO, OfferDAO, PartnerDAO, ClazzDAO}
 import play.Play
 import play.api.Logger
 import play.api.cache.Cache
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.Json
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.Play.current
 import scala.concurrent.duration._
+import play.api.libs.json._
+import scala.collection.mutable.ArrayBuffer
+
 
 import scala.concurrent.{Await, Future}
 
@@ -36,6 +39,38 @@ class ApplicationController @Inject()(
                                        partnerDAO: PartnerDAO,
                                        offerDAO: OfferDAO)
   extends Silhouette[Partner, JWTAuthenticator] {
+
+
+
+
+  def enums = UserAwareAction.async { implicit request =>
+    lazy val cacheExpire = Play.application().configuration().getString("cache.expire.get.enums").toInt
+    val enums:JsValue = Cache.getAs[JsValue]("enums").getOrElse{
+      var recurrences = ArrayBuffer[JsValue]()
+      for (d <- Recurrence.values) {
+        recurrences += Json.obj(
+          "id" -> d,
+          "name" -> Messages("enum.clazz.recurrence."+d)
+        )
+      }
+      var types = ArrayBuffer[JsValue]()
+      for (d <- Type.values) {
+        types += Json.obj(
+          "id" -> d,
+          "name" -> Messages("enum.clazz.type."+d)
+        )
+      }
+      val e = Json.obj("enums" -> Json.obj(
+        "clazz" -> Json.obj(
+          "recurrences" -> Json.toJson(recurrences),
+          "types" -> Json.toJson(types)
+        )
+      ))
+      Cache.set("enums", e, cacheExpire.seconds)
+      e
+    }
+    Future.successful(Ok(enums))
+  }
 
 
   def offers = UserAwareAction.async { implicit request =>

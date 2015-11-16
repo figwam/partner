@@ -32,7 +32,7 @@ app.controller('AuthCtrl', ['$rootScope', '$scope', '$auth', '$state', '$anchorS
     PartnerFactory.get().then(
       function(response) {
         $rootScope.partner = response.data;
-        $state.path("me")
+        $state.go("me")
       },
       function(response) {
         if(response.status == 401) {
@@ -44,7 +44,9 @@ app.controller('AuthCtrl', ['$rootScope', '$scope', '$auth', '$state', '$anchorS
           // TODO: improve! Distinguish between error cases
           $auth.logout().then(function() {$state.go("home")});
         }
-    });
+      });
+
+
   };
 
   /**

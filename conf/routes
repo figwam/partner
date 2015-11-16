@@ -7,9 +7,11 @@ GET           /                                      com.tuplejump.playYeoman.Ye
 #open resources
 GET           /partner                               controllers.ApplicationController.partner
 GET           /offers                               controllers.ApplicationController.offers
+GET           /enums                               controllers.ApplicationController.enums
 
 # Secured resources
 GET           /clazzes/partners/me                   controllers.ClazzDefinitionController.listByPartner(p:Int ?= 0, s:Int ?= 1, f ?= "")
+POST          /partners/me/clazzdefs                 controllers.ClazzDefinitionController.create
 GET           /signOut                               controllers.ApplicationController.signOut
 POST          /signIn                                controllers.CredentialsAuthController.authenticate
 

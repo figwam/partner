@@ -12,9 +12,7 @@ word.activate=Aktivieren
 word.name=Name
 word.description=Beschreibung
 word.recurrence=Wiederholung
-word.start=Beginn
 word.end=Ende
-word.duration=Dauer (Min.)
 
 sign.in=Einloggen
 sign.out=Abmelden
@@ -39,6 +37,35 @@ my.bill=Meine Einnahmen
 ######
 # Dashboard
 
+my.dashboard.breadcrumb=Eingeloggt als
+
+
 clazz.offered.amount=Sportkurse werden gerade von Ihnen angeboten
 
+
+clazzdef.start=Kursbeginn
+clazzdef.duration=Dauer (Min.)
+clazzdef.tags=Sportart
+clazzdef.contingent=Max. Plätze
+clazzdef.active.from=Kurs aktiv von
+clazzdef.active.till=Kurs aktiv bis
+
+
+
+
+enum.clazz.recurrence.onetime=Einmalig
+enum.clazz.recurrence.weekly=Wöchentlich
+enum.clazz.type.aerobic=Aerobic
+enum.clazz.type.boxen=Boxen
+enum.clazz.type.kickboxen=Kickboxen
+enum.clazz.type.crossfit=Crossfit
+enum.clazz.type.gymnastic=Gymnastic
+enum.clazz.type.yoga=Yoga
+enum.clazz.type.parcour=Parcour
+enum.clazz.type.mma=Mixed Martrial Arts (MMA)
+enum.clazz.type.thaiboxen=Thaiboxen
+enum.clazz.type.dance=Tanzen
+
+save.ok=Daten erfolgreich gespeichert
+save.fail=Speichern der Daten fehlgeschlagen
 

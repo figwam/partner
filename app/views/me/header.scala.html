@@ -11,7 +11,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li class="dropdown-header">
-                        {{trainee.fullname ? trainee.fullname : trainee.firstname}}
+                        {{partner.fullname ? partner.fullname : partner.firstname}}
                     </li>
                     <li class="divider"></li>
                     <li class="link">
@@ -25,7 +25,7 @@
                 @Messages("my.dashboard")
             </div>
             <div class="breadcrumb-links">
-                @Messages("my.dashboard.breadcrumb"): {{trainee.fullname ? trainee.fullname : trainee.firstname}}
+                @Messages("my.dashboard.breadcrumb"): {{partner.fullname ? partner.fullname : partner.firstname}}
             </div>
         </div>
     </div>
