@@ -56,67 +56,6 @@ class ApplicationController @Inject()(
     Future.successful(Ok(Json.toJson(request.identity)))
   }
 
-    /*
-    try {
-      (request.body \ "idPartner").asOpt[Long].map { idPartner =>
-        val future = partnerDAO.book(Registration(None, UUID.randomUUID(), idPartner, idClazz))
-        future.onSuccess { case a => Logger.debug(s"Registration created: $a"); Future.successful(Ok)}
-        future.onFailure {
-          case t: PSQLException => {
-            if (t.getMessage.contains("duplicate key value violates unique constraint")) {
-              Logger.info("Registration already exists")
-              Future.successful(BadRequest("registration already exists"))
-            }
-            else {
-              Logger.error("Something bad happened", t)
-              Future.successful(InternalServerError("Something bad happened"))
-            }
-          }
-          case t: Throwable => {
-            Logger.error(t.getMessage,t)
-            Future.successful(InternalServerError("Something bad happened"))
-          }
-          case _ => Future.successful(BadRequest("Missing parameter [idPartner]"))
-        }
-      }.getOrElse {
-        Future.successful(BadRequest("Missing parameter [idPartner]"))
-      }
-    } catch {
-      case t: Throwable =>
-        Logger.error(t.getMessage,t)
-        Future.successful(InternalServerError("Something bad happened"))
-    }
-    */
-
-
-
-  def clazzes(page: Int, orderBy: Int, filter: String) = UserAwareAction.async { implicit request =>
-    clazzDAO.list(page, 10, orderBy, "%" + filter + "%").flatMap { pageClazzes =>
-      Future.successful(Ok(Json.toJson(pageClazzes)))
-    }.recover {
-      case ex: TimeoutException =>
-        Logger.error("Problem found in clazz list process")
-        InternalServerError(ex.getMessage)
-    }
-  }
-
-  def clazzesCount = UserAwareAction.async { implicit request =>
-    clazzDAO.count.flatMap{ count =>
-      Future.successful(Ok(Json.toJson(count)))
-    }
-  }
-
-
-  def clazzesPersonalized(page: Int, orderBy: Int, filter: String) = SecuredAction.async { implicit request =>
-    clazzDAO.listPersonalized(page, 10, orderBy, "%" + filter + "%", request.identity.id.getOrElse(UUID.randomUUID())).flatMap { pageClazzes =>
-      Future.successful(Ok(Json.toJson(pageClazzes)))
-    }.recover {
-      case ex: TimeoutException =>
-        Logger.error("Problem found in clazz list process")
-        InternalServerError(ex.getMessage)
-    }
-  }
-
   /**
    * Manages the sign out action.
    */
@@ -135,6 +74,7 @@ class ApplicationController @Inject()(
   def viewRestricted(template: String) = SecuredAction.async { implicit request =>
     template match {
       case "clazzes" => Future.successful(Ok(views.html.me.clazzes()))
+      case "clazzesEdit" => Future.successful(Ok(views.html.me.clazzesEdit()))
       case "dashboard" => Future.successful(Ok(views.html.me.dashboard()))
       case "header" => Future.successful(Ok(views.html.me.header()))
       case "sidebar" => Future.successful(Ok(views.html.me.sidebar()))
@@ -144,6 +84,7 @@ class ApplicationController @Inject()(
 
   def view(template: String) = UserAwareAction { implicit request =>
     template match {
+      case "test" => Ok(views.html.me.clazzesEdit())
       case "signIn" => Ok(views.html.signIn(socialProviderRegistry))
       case "header" => Ok(views.html.header())
       case "footer" => Ok(views.html.footer())

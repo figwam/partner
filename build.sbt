@@ -12,6 +12,8 @@ resolvers := ("Atlassian Releases" at "https://maven.atlassian.com/public/") +: 
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
+resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 resolvers += "Local Play Repository" at "file://Users/alex/.ivy2/local"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
@@ -30,6 +32,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "1.0.1",
   "com.typesafe.play" %% "play-slick-evolutions" % "1.0.1",
   "org.postgresql" % "postgresql" % "9.4-1202-jdbc42",
+  "com.cloudinary" %% "cloudinary-scala-play" % "0.9.7-SNAPSHOT",
   cache,
   evolutions,
   filters

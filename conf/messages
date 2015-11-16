@@ -2,6 +2,19 @@
 brand=Gymix
 word.next=Weiter
 word.back=Zurück
+word.weekly=Wöchentlich
+word.onetime=Einmalig
+word.contingent=Plätze
+word.delete=Löschen
+word.edit=Bearbeiten
+word.add=Hinzufügen
+word.activate=Aktivieren
+word.name=Name
+word.description=Beschreibung
+word.recurrence=Wiederholung
+word.start=Beginn
+word.end=Ende
+word.duration=Dauer (Min.)
 
 sign.in=Einloggen
 sign.out=Abmelden
@@ -17,11 +30,15 @@ disclaimer=Disclaimer
 impressum=Impressum
 
 ######
-# Dashboard
-clazz.delete=Löschen
-clazz.edit=Bearbeiten
-clazz.add=Hinzufügen
-clazz.offered.amount=Sportkurse werden gerade von Ihnen angeboten
+# Sidebar
+my.dashboard=Gymix Partner
+my.clazzes=Meine Sportkurse
+my.studio=Mein Studio
+my.bill=Meine Einnahmen
 
+######
+# Dashboard
+
+clazz.offered.amount=Sportkurse werden gerade von Ihnen angeboten
 
 

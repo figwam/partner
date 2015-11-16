@@ -1,0 +1,108 @@
+@()(implicit messages: Messages)
+
+<div class="row">
+        <!-- edit form column -->
+
+    <fieldset class="signUp-fieldset">
+
+        <div class="help-block text-danger" ng-if="form.zip.$dirty" ng-messages="form.zip.$error">
+            <div ng-message="required">@Messages("error.required")</div>
+            <div ng-message="invalid.data">@Messages("invalid.data")</div>
+        </div>
+
+            <!-- Text input-->
+        <div class="form-group row signUp-formGroup">
+            <div class="col-sm-12">
+                <label class="control-label">@Messages("word.name")</label>
+                <input type="text" ng-value="trainee.firstname" checker="scope.checkValidity" name="firstname" ng-model="formData.firstname" placeholder="@Messages("firstname")" class="form-control input-sm" required>
+            </div>
+        </div>
+        <div class="form-group row signUp-formGroup">
+            <div class="col-sm-12">
+                <label class="control-label">@Messages("word.description")</label>
+                <textarea type="text" ng-value="trainee.lastname" checker="scope.checkValidity" name="lastname" ng-model="formData.lastname" placeholder="@Messages("lastname")" rows="5" class="form-control input-sm" required/>
+            </div>
+        </div>
+        <!--https://github.com/angular-ui/bootstrap/issues/2998-->
+        <div class="form-group row signUp-formGroup">
+            <div class="col-sm-6">
+                <label class="control-label">@Messages("word.start")</label>
+                <div class="dropdown" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-ng-model="data.dateStart">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><datetimepicker data-on-set-time="onTimeStartSet(newDate, oldDate)" data-ng-model="data.dateStart" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" data-before-render="beforeRenderStart($view, $dates, $leftDate, $upDate, $rightDate)"/></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label">@Messages("word.end")</label>
+                <div class="dropdown" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-ng-model="data.dateEnd">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><datetimepicker data-on-set-time="onTimeEndSet(newDate, oldDate)" data-ng-model="data.dateEnd" data-datetimepicker-config="{ dropdownSelector: '#dropdown2', startView:'hour'}" data-before-render="beforeRenderEnd($view, $dates, $leftDate, $upDate, $rightDate)"/></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label class="control-label">@Messages("word.contingent")</label>
+                <input type="number" ng-value="1" checker="scope.checkValidity" name="firstname" ng-model="formData.firstname" placeholder="@Messages("firstname")" class="form-control input-sm" min="1" max="99" required>
+            </div>
+            <div class="col-sm-2">
+                <label class="control-label">@Messages("word.duration")</label>
+                <input type="number" ng-value="1" checker="scope.checkValidity" name="firstname" ng-model="formData.firstname" placeholder="@Messages("firstname")" class="form-control input-sm" min="1" max="99" required>
+            </div>
+            <div class="col-sm-2">
+                <label class="control-label">@Messages("word.recurrence")</label>
+                <input type="text" ng-value="trainee.address.street" checker="scope.checkValidity" name="street" ng-model="formData.street" placeholder="@Messages("street")" class="form-control input-sm" required>
+            </div>
+        </div>
+
+        <div class="form-group row signUp-formGroup">
+            <div class="col-sm-5">
+                <label class="control-label">@Messages("word.start")</label>
+                <div class="dropdown" dropdown>
+                    <a class="dropdown-toggle" dropdown-toggle id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-ng-model="data.dateStart">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><datetimepicker data-on-set-time="onTimeStartSet(newDate, oldDate)" data-ng-model="data.dateStart" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }" data-before-render="beforeRenderStart($view, $dates, $leftDate, $upDate, $rightDate)"/></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label class="control-label">@Messages("word.duration")</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" data-ng-model="data.duration" step="5" required min="5" max="1440">
+                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <label class="control-label">@Messages("word.end")</label>
+                <h5>{{data.dateStart}}</h5>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                        <!--ng-disabled="form.$invalid" -->
+                    <button id="submit" type="submit" value="submit" class="btn btn-lg btn-success btn-block" ng-click="add()">@Messages("word.add")</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+

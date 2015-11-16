@@ -13,7 +13,8 @@ var app = angular.module('uiApp', [
   'validation.match',
   'angularUtils.directives.dirPagination',
   'ngAnimate',
-  'ngLoadingSpinner'
+  'ngLoadingSpinner',
+  'ui.bootstrap.datetimepicker'
 ]);
 
 /**
@@ -22,17 +23,15 @@ var app = angular.module('uiApp', [
 app.run(function($state,$rootScope) {
 
   /**
-   * The trainee data.
+   * The partner data.
    *
    * @type {{}}
    */
-  $rootScope.trainee = {};
-  $rootScope.clazzes = {};
-  $rootScope.clazzesSearchString = '';
-  $rootScope.formData = {};;
+  $rootScope.partner = {}
+  $rootScope.formData = {}
 
   // for the state handling
-  $rootScope.$state = $state;
+  $rootScope.$state = $state
 
 
 });
@@ -66,8 +65,8 @@ app.config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authPro
           controller: 'HomeCtrl'
         },
         'content': {
-          templateUrl: '/views/signIn.html',
-          controller: 'SignInCtrl'
+          templateUrl: '/views/test.html',
+          controller: 'ClazzDefCtrl'
         },
         'footer': {
           templateUrl: '/views/footer.html'
@@ -102,10 +101,18 @@ app.config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authPro
           templateUrl: '/views/footer.html'
         }
       }})
-    .state('me.clazzes', { url:'/me/clazzes',
+    .state('me.clazzes', {
       views: {
         'content@': {
-          templateUrl: '/views/me/clazzes.html'
+          templateUrl: '/views/me/clazzes.html',
+          controller: 'ClazzDefCtrl'
+        }
+      }})
+    .state('me.clazzes.edit', {
+      views: {
+        'content@': {
+          templateUrl: '/views/me/clazzesEdit.html',
+          controller: 'ClazzDefCtrl'
         }
       }})
 
